@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="exam03-result.html" method="POST" th:action="@{/exam3/result}">
+
+<label for="item1">商品１：</label>
+<input type="text" name="item1" id="item1">円<br>
+
+<label for="item2">商品２：</label>
+<input type="text" name="item2" id="item2">円<br>
+
+<label for="item3">商品３：</label>
+<input type="text" name="item3" id="item3">円<br>
+
+<button>購入</button>
+</form>
+</body>
+</html>
