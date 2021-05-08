@@ -36,16 +36,19 @@ public class ShoppingCartController {
 		application.setAttribute("itemMap", itemMap);
 		
 		if(session.getAttribute("cartList")==null) {
-			List<Item> cartList = new ArrayList<>();
+			Map<Integer, Item> cartList = new LinkedHashMap<>();
 			session.setAttribute("cartList", cartList);
+		}
+		if(session.getAttribute("NumOfAdd")==null) {
+			session.setAttribute("NumOfAdd", 0);
 		}
 		
 		System.out.println(session.getAttribute("cartList"));
 		Integer totalPrice=0;
-		for(Item item : (List<Item>)session.getAttribute("cartList")) {
-			
-			if(item!=null) {	
-			totalPrice+=item.getPrice();
+		for(int i=1;i<=(int)session.getAttribute("NumOfAdd");i++) {
+			Map<Integer,Item> cartList=(LinkedHashMap<Integer,Item>)session.getAttribute("cartList");
+			if(cartList.get(i)!=null) {	
+			totalPrice+=cartList.get(i).getPrice();
 			}
 			
 		}
@@ -58,9 +61,10 @@ public class ShoppingCartController {
 	@RequestMapping("/incart")
 	public String inCart(Integer itemNum,Model model) {
 		System.out.println("送信された商品番号"+itemNum);
-		List<Item> cartList=(List<Item>)session.getAttribute("cartList"); 
-		Map<Integer,Item> itemMap=(Map<Integer,Item>)application.getAttribute("itemMap");
-		cartList.add(itemMap.get(itemNum));
+		session.setAttribute("NumOfAdd",(int)session.getAttribute("NumOfAdd")+1);
+		Map<Integer,Item> cartList=(LinkedHashMap<Integer,Item>)session.getAttribute("cartList"); 
+		Map<Integer,Item> itemMap=(LinkedHashMap<Integer,Item>)application.getAttribute("itemMap");
+		cartList.put((int)session.getAttribute("NumOfAdd"),itemMap.get(itemNum));
 		session.setAttribute("cartList", cartList);
 
 		return index(model);
@@ -69,9 +73,9 @@ public class ShoppingCartController {
 	@RequestMapping("/delete")
 	public String delete(Integer itemNum , Model model) {
 		System.out.println("削除品番号"+itemNum);
-		List<Item> cartList=(List<Item>)session.getAttribute("cartList"); 
-		Map<Integer,Item> itemMap=(Map<Integer,Item>)application.getAttribute("itemMap");
-		cartList.remove(itemMap.get(itemNum));
+		Map<Integer, Item> cartList=(LinkedHashMap<Integer, Item>)session.getAttribute("cartList"); 
+		cartList.remove(itemNum);
+		
 		session.setAttribute("cartList", cartList);
 		
 		return index(model);

@@ -14,7 +14,7 @@
 
 <div th:each=" item : ${application.itemMap}">
 <form action="item-and-cart.html" method="POST" th:action="@{/exam6/incart}">
-<span th:text="${item.value.name}">商品名</span> <span th:text="${item.value.price}">金額</span>
+<span th:text="${item.value.name}">商品名</span> <span th:text="${item.value.price}">金額</span>円
 <button name="itemNum" th:value="${item.key}">カートへ</button>
 </form>
 
@@ -30,29 +30,21 @@
 <div th:each=" item : ${session.cartList}">
 <form action="item-and-cart.html" method="POST" th:action="@{/exam6/delete}">
 
-<span th:text="${item.name}">商品名</span> <span th:text="${item.price}">金額</span>
-<button name="itemNum" th:value="1">削除</button>
+<span th:text="${item.value.name}">商品名</span> <span th:text="${item.value.price}">金額</span>円
+<button name="itemNum" th:value="${item.key}">削除</button>
 
 </form>
 
 </div>
 
-</div>
-
-
-<!-->
-<div id="cartlist">
-
-<div th:unless="${session.cartList.value=null}" th:each=" item : ${session.cartList}">
-<form action="item-and-cart.html" method="POST" th:action="@{/exam6/delete}">
-<span th:text="${item.name}">商品名</span> <span th:text="${item.price}">金額</span>
-<button name="item" th:value="${item.key}">削除</button>
-</form>
+合計：<span th:text="${totalPrice}">
+</span>円
 
 </div>
 
-</div>
-</-->
+
+
+
 
 
 </body>
