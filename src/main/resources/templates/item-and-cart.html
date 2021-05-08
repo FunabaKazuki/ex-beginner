@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+
+<div id="itemlist">
+
+<span>商品一覧</span>
+
+<div th:each=" item : ${application.itemMap}">
+<form action="item-and-cart.html" method="POST" th:action="@{/exam6/incart}">
+<span th:text="${item.value.name}">商品名</span> <span th:text="${item.value.price}">金額</span>
+<button name="itemNum" th:value="${item.key}">カートへ</button>
+</form>
+
+</div>
+
+</div>
+
+
+
+
+<div id="cartlist">
+
+<div th:each=" item : ${session.cartList}">
+<form action="item-and-cart.html" method="POST" th:action="@{/exam6/delete}">
+
+<span th:text="${item.name}">商品名</span> <span th:text="${item.price}">金額</span>
+<button name="itemNum" th:value="1">削除</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-->
+<div id="cartlist">
+
+<div th:unless="${session.cartList.value=null}" th:each=" item : ${session.cartList}">
+<form action="item-and-cart.html" method="POST" th:action="@{/exam6/delete}">
+<span th:text="${item.name}">商品名</span> <span th:text="${item.price}">金額</span>
+<button name="item" th:value="${item.key}">削除</button>
+</form>
+
+</div>
+
+</div>
+</-->
+
+
+</body>
+</html>
